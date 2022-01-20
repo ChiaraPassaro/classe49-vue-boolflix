@@ -1,42 +1,50 @@
 <template>
-  <div id="app">
-    <Header @searchPerformed="search($event)" />
-    <MainWatch :search-text="searchText" />
-    <Footer />
-  </div>
+  <main>
+    <div
+      v-if="cards.length > 0"
+      class="cards/"
+    >
+      <Card
+        v-for="(card, index) in cards"
+        :key="index"
+        :info="card"
+      />
+    </div>
+    <div v-else>
+      Nessun risultato
+    </div>
+  </main>
 </template>
 
 <script>
 import axios from 'axios';
-import Header from './components/Header.vue';
-import MainWatch from './components/MainWatch.vue';
-import Footer from './components/Footer.vue';
+import Card from './Card.vue';
 
 export default {
-  name: 'App',
+  name: 'MainWatch',
   components: {
-    Header,
-    MainWatch,
-    Footer,
+    Card,
+  },
+  props: {
+    searchText: {
+      type: String,
+    },
   },
   data() {
     return {
       query: 'https://api.themoviedb.org/3/search/',
       api_key: 'e99307154c6dfb0b4750f6603256716d',
       language: 'en-US',
-      searchText: '',
       cards: [],
     };
   },
-  created() {
-    // this.getFilms();
+  watch: {
+    searchText() {
+      this.search();
+    },
   },
   methods: {
-    setTextSearch(value) {
-      this.searchText = value;
-    },
-    search(text) {
-      this.searchText = text;
+    search() {
       this.getFilms();
     },
     getFilms() {
@@ -55,13 +63,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style>
+
 </style>

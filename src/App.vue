@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header />
-    <Main />
+    <Header @searchPerformed="search($event)" />
+    <Main :cards="cards" />
     <Footer />
   </div>
 </template>
@@ -23,20 +23,30 @@ export default {
     return {
       query: 'https://api.themoviedb.org/3/search/',
       api_key: 'e99307154c6dfb0b4750f6603256716d',
+      language: 'en-US',
+      searchText: '',
+      cards: [],
     };
   },
   created() {
-    this.getFilms();
+    // this.getFilms();
   },
   methods: {
+    search(text) {
+      this.searchText = text;
+      this.getFilms();
+    },
     getFilms() {
       const endpoint = 'movie';
       const parameters = {
         api_key: this.api_key,
-        language: 'en-US',
-        query: 'testo',
+        language: this.language,
+        query: this.searchText,
       };
-      axios.get(`${this.query}${endpoint}`, { params: parameters }).then((result) => console.log(result)).catch((error) => console.log(error));
+      // https://api.themoviedb.org/3/search/movie
+      axios.get(`${this.query}${endpoint}`, { params: parameters }).then((result) => {
+        this.cards = result.data.results;
+      }).catch((error) => console.log(error));
     },
   },
 };

@@ -1,10 +1,11 @@
 <template>
   <div class="card">
     <h2>
-      {{ info.title }}
+      Title: {{ (info.title) ? info.title : info.name }}
+      <!-- Title: {{ info.title }} -->
     </h2>
     <h3>
-      {{ info.original_title }}
+      Original title: {{ (info.original_title) ? info.original_title : info.original_name }}
     </h3>
     <div class="language">
       <!-- <img src="../assets/images/en.png" alt=""> -->
@@ -24,14 +25,12 @@
 </template>
 
 <script>
-/**
- * TODO
- * Trasformiamo la stringa statica della lingua in una vera
- * e propria bandiera della nazione corrispondente,
- * gestendo il caso in cui non abbiamo la bandiera della nazione
- * ritornata dall’API (le flag non ci sono in FontAwesome).
- * "original_language": "de"
- */
+// tv
+//  "name": "Goof Troop",
+//  "original_name": "Goof Troop",
+// movies
+//  "title": "Goof Troop",
+//  "original_title": "Goof Troop",
 export default {
   name: 'Card',
   props: {

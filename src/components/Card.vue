@@ -19,12 +19,20 @@
       </p>
     </div>
     <div class="vote">
+      <font-awesome-icon
+        icon="air-freshener"
+      />
       {{ info.vote_average }}
     </div>
   </div>
 </template>
 
 <script>
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faAirFreshener } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+library.add(faAirFreshener);
 // tv
 //  "name": "Goof Troop",
 //  "original_name": "Goof Troop",
@@ -33,6 +41,9 @@
 //  "original_title": "Goof Troop",
 export default {
   name: 'Card',
+  components: {
+    FontAwesomeIcon,
+  },
   props: {
     info: Object,
   },
@@ -55,6 +66,6 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 
 </style>

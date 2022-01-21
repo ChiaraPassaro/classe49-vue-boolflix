@@ -1,17 +1,36 @@
 <template>
   <main>
-    <div
-      v-if="cards.length > 0"
-      class="cards/"
-    >
-      <Card
-        v-for="(card, index) in cards"
-        :key="index"
-        :info="card"
-      />
+    <div class="movies">
+      <h2>Movies</h2>
+      <div
+        v-if="movies.length > 0"
+        class="cards/"
+      >
+        <Card
+          v-for="(card, index) in movies"
+          :key="index+'-'+card.id"
+          :info="card"
+        />
+      </div>
+      <div v-else>
+        Nessun risultato
+      </div>
     </div>
-    <div v-else>
-      Nessun risultato
+    <div class="series">
+      <h2>TV</h2>
+      <div
+        v-if="tvs.length > 0"
+        class="cards/"
+      >
+        <Card
+          v-for="(card, index) in tvs"
+          :key="index+'-'+card.id"
+          :info="card"
+        />
+      </div>
+      <div v-else>
+        Nessun risultato
+      </div>
     </div>
   </main>
 </template>
@@ -30,7 +49,13 @@ export default {
    * l'array o object stesso
    */
   props: {
-    cards: {
+    movies: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+    tvs: {
       type: Array,
       default() {
         return [];
@@ -40,6 +65,6 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 
 </style>

@@ -2,7 +2,10 @@
   <div id="app">
     <!-- versione con invio delle card e chiamata alla API in App -->
     <Header @searchPerformed="search($event)" />
-    <Main :cards="getResults" />
+    <Main
+      :movies="movies"
+      :tvs="tvs"
+    />
     <!-- Versione con watch inviamo il testo di ricerca e facciamo chiamata API in Main -->
     <!-- <Header @searchPerformed="setTextSearch($event)" /> -->
     <!-- <MainWatch :search-text="searchText" /> -->
@@ -75,7 +78,7 @@ export default {
      */
     search(text) {
       this.searchText = text;
-      // this.getFilms();
+      this.getFilms();
       this.getTvs();
     },
     getFilms() {

@@ -24,6 +24,11 @@ export default {
   components: {
     Card,
   },
+  /**
+   * Per assegnare un valore di default ad un array o un object
+   * è necessario utilizzare una funzione che restituisce
+   * l'array o object stesso
+   */
   props: {
     cards: {
       type: Array,

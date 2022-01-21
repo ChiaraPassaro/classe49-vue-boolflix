@@ -1,7 +1,11 @@
 <template>
   <div id="app">
+    <!-- versione con invio delle card e chiamata alla API in App -->
     <Header @searchPerformed="search($event)" />
-    <MainWatch :search-text="searchText" />
+    <Main :cards="cards" />
+    <!-- Versione con watch inviamo il testo di ricerca e facciamo chiamata API in Main -->
+    <!-- <Header @searchPerformed="setTextSearch($event)" /> -->
+    <!-- <MainWatch :search-text="searchText" /> -->
     <Footer />
   </div>
 </template>
@@ -9,16 +13,22 @@
 <script>
 import axios from 'axios';
 import Header from './components/Header.vue';
-import MainWatch from './components/MainWatch.vue';
+import Main from './components/Main.vue';
 import Footer from './components/Footer.vue';
+// import MainWatch from './components/MainWatch.vue';
 
 export default {
   name: 'App',
   components: {
     Header,
-    MainWatch,
+    Main,
     Footer,
   },
+  // components: { // se vogliamo usare MainWatch dobbiamo cambiare anche i components
+  //   Header,
+  //   MainWatch,
+  //   Footer,
+  // },
   data() {
     return {
       query: 'https://api.themoviedb.org/3/search/',
@@ -29,27 +39,46 @@ export default {
     };
   },
   created() {
-    // this.getFilms();
+    // this.getFilms(); //testiamo il nostro metodo
   },
   methods: {
+    /**
+     * Usando il componente MainWatch abbiamo bisogno
+     * di assegnare il nuovo valore di ricerca all'emit dell'evento searchPerformed
+    */
     setTextSearch(value) {
       this.searchText = value;
     },
+    /**
+     * questo metodo ci consente di aggiungere più ricerche
+     * nel momento in cui si avvia l'evento searchPerformed
+     */
     search(text) {
       this.searchText = text;
       this.getFilms();
     },
     getFilms() {
       const endpoint = 'movie';
+      // facciamo sempre attenzione a che parametri accetta la nostra API
       const parameters = {
         api_key: this.api_key,
         language: this.language,
         query: this.searchText,
       };
-      // https://api.themoviedb.org/3/search/movie
-      axios.get(`${this.query}${endpoint}`, { params: parameters }).then((result) => {
-        this.cards = result.data.results;
-      }).catch((error) => console.log(error));
+
+      /**
+       * questo è l'endpoint completo
+       * https://api.themoviedb.org/3/search/movie
+       * al quale poi aggiungere i parametri
+       * Una chiamata axios accetta una serie di parametri che possiamo trovare in documentazione
+       * https://axios-http.com/docs/example
+      */
+      axios.get(`${this.query}${endpoint}`,
+        { params: parameters })
+        .then((result) => {
+          this.cards = result.data.results;
+        })
+        .catch((error) => console.log(error));
     },
   },
 };

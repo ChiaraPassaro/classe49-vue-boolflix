@@ -38,6 +38,14 @@ export default {
       cards: [],
     };
   },
+  /** Il Watch funziona come una computed, ma può richiamare
+   ** delle funzioni con side effects e assegnare valori.
+   ** Qui rimaniamo in ascolto della prop searchText,
+   ** quando cambia allora si avvia il metodo search
+   ** da notare come a differenza delle computed, che hanno bisogno di un
+   ** nome diverso dalla proprieta' della quale rimangono in ascolto,
+   ** qui abbiamo lo stesso nome della props
+  */
   watch: {
     searchText() {
       this.search();
